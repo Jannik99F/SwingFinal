@@ -1,10 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class Clickpage extends JFrame {
@@ -15,8 +12,8 @@ public class Clickpage extends JFrame {
     private int timeLeft;
     private int greenButtonIndex;
     private Timer timer;
-    private Random random;
-    private Player player = new Player();
+    private final Random random;
+    private final Player player = new Player();
 
     //TODO: DONE Konstruktor mit String für namen übergeben und Player Objekt mit namen erzeugen
     //TODO: Fenster bei erzeugung vergrößern
@@ -35,11 +32,14 @@ public class Clickpage extends JFrame {
         createTimer();
 
         pack();
+        setSize(800, 600);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    private JPanel topPanel;
     private void createTopPanel() {
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 10));
+        topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 10));
         scoreLabel = new JLabel("Score: 0");
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
         timeLabel = new JLabel("Time: " + timeLeft);
@@ -48,6 +48,7 @@ public class Clickpage extends JFrame {
         topPanel.add(timeLabel);
         add(topPanel, BorderLayout.NORTH);
     }
+    Color backgroundColor = new Color(255, 120, 120);
     private void createBottomPanel() {
         JPanel bottomPanel = new JPanel(new GridLayout(2, 2, 10, 10));
         buttons = new JButton[4];
@@ -56,16 +57,21 @@ public class Clickpage extends JFrame {
             buttons[i].setPreferredSize(new Dimension(150, 100));
             buttons[i].setEnabled(false);
             int buttonIndex = i;
-            buttons[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (buttonIndex == greenButtonIndex) {
-                        score += timeLeft <= 15 ? 2 : 1;
-                    } else {
-                        score--;
-                    }
-                    scoreLabel.setText("Score: " + score);
+            buttons[i].addActionListener(e -> {
+                if (buttonIndex == greenButtonIndex) {
+                    score += timeLeft <= 15 ? 2 : 1;
+                } else {
+                    score--;
+                    topPanel.setBackground(backgroundColor);
+                    bottomPanel.setBackground(backgroundColor);
+                    Timer timer = new Timer(180, e1 -> {
+                        topPanel.setBackground(null);
+                        bottomPanel.setBackground(null);
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
                 }
+                scoreLabel.setText("Score: " + score);
             });
             bottomPanel.add(buttons[i]);
         }
@@ -73,17 +79,14 @@ public class Clickpage extends JFrame {
     }
 
     private void createTimer() {
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeLeft--;
-                timeLabel.setText("Time: " + timeLeft);
-                if (timeLeft == 0) {
-                    endGame();
-                }
-                if (greenButtonIndex != -1 && timeLeft % 2 == 0) {
-                    changeGreenButton();
-                }
+        timer = new Timer(1000, e -> {
+            timeLeft--;
+            timeLabel.setText("Time: " + timeLeft);
+            if (timeLeft == 0) {
+                endGame();
+            }
+            if (greenButtonIndex != -1 && timeLeft % 2 == 0) {
+                changeGreenButton();
             }
         });
         timer.start();
@@ -128,7 +131,7 @@ public class Clickpage extends JFrame {
         routeBackToStart();
     }
     private void routeBackToStart() {
-        Start startpage = new Start();
+        Start startpage = new Start(2);
         startpage.readScoresFromFile();
         startpage.setVisible(true);
         dispose();
