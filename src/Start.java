@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
+
 
 public class Start extends JFrame {
 
@@ -13,7 +13,7 @@ public class Start extends JFrame {
 
     public static Clickpage clickpage;
 
-    Start(){
+    Start(int j){
         setTitle("StartPage");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 800);
@@ -22,7 +22,10 @@ public class Start extends JFrame {
 
 
         JLabel evalLink = createLinkLabel("Click here to take our survey", "https://forms.gle/wsoBcjnE9GfFPiF7A");
+        evalLink.setMaximumSize(new Dimension(165, 40));
         evalLink.setAlignmentX(Component.CENTER_ALIGNMENT);
+        if(j == 1)
+            evalLink.setVisible(false);
         add(evalLink);
 
         add(Box.createVerticalStrut(20));
@@ -43,6 +46,7 @@ public class Start extends JFrame {
         scoresTextArea.setLineWrap(true);
         scoresTextArea.setWrapStyleWord(true);
 
+        scrollPane.setMaximumSize(new Dimension(330, 40));
         scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         readScoresFromFile();
         add(scrollPane);
@@ -51,6 +55,21 @@ public class Start extends JFrame {
 
         nameInput.setMaximumSize(new Dimension(400, 40));
         nameInput.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nameInput.setText("Enter your name here");
+
+        nameInput.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                nameInput.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (nameInput.getText().isEmpty()) {
+                    nameInput.setText("Enter your name here");
+                }
+            }
+        });
         add(nameInput);
 
         add(Box.createVerticalStrut(20));
@@ -137,7 +156,7 @@ public class Start extends JFrame {
     }
     private void setPlayerName() {
         String input = nameInput.getText().trim();
-        playerName = input.isEmpty() ? "John Doe" : input;
+        playerName = input.isEmpty() ? "John_Doe" : input.replaceAll("\\s", "_");
     }
     private void showClickpage() {
         clickpage = new Clickpage(playerName);
