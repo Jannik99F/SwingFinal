@@ -5,7 +5,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Start start = new Start();
+                    Start start = new Start( 1);
                     start.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
