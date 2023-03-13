@@ -1,10 +1,7 @@
 (262) Peter_Lustig
-(219) Niklas
 (173) Hans
 (161) Susi
 (155) Niki
 (152) Werner
 (133) Erwin
-(78) hello
-(77) mewtu
-(-20) gg
+(132) gg
