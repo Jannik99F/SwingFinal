@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class FileHandler {
+
+    //readFile liest die scores.txt ein und gibt ein Array mit den Spielern zurück
     public static ArrayList<Player> readFile(String filePath) {
         ArrayList<Player> players = new ArrayList<>();
 
@@ -25,6 +27,7 @@ public class FileHandler {
         return players;
     }
 
+     //writeFile erhält über readFile ein Array mit den Spielern, fügt den neuen Spieler hinzu, sortiert das array und speichert es in die scores.txt
     public static void write(ArrayList<Player> players, Player newPlayer, String filePath) throws IOException {
         players.add(newPlayer);
         Collections.sort(players);
