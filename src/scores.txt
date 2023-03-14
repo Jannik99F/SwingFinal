@@ -4,5 +4,3 @@
 (155) Niki
 (152) Werner
 (133) Erwin
-(132) gg
-(125) Enter_your_name_here

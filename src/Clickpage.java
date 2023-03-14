@@ -15,8 +15,7 @@ public class Clickpage extends JFrame {
     private final Random random;
     private final Player player = new Player();
 
-    //TODO: DONE Konstruktor mit String für namen übergeben und Player Objekt mit namen erzeugen
-    //TODO: Fenster bei erzeugung vergrößern
+    // Name wird dem Konstruktor übergeben, daraus wird ein Player Objekt erstellt
     public Clickpage(String name) {
 
         player.setName(name);
@@ -27,6 +26,10 @@ public class Clickpage extends JFrame {
         greenButtonIndex = -1;
         random = new Random();
 
+
+        // Es wird ein topPanel erstellt, welches die Labels für Score und Time enthält
+        // Es wird ein bottomPanel erstellt, welches die Buttons enthält
+        // Timer wird erstellt
         createTopPanel();
         createBottomPanel();
         createTimer();
@@ -48,6 +51,8 @@ public class Clickpage extends JFrame {
         topPanel.add(timeLabel);
         add(topPanel, BorderLayout.NORTH);
     }
+
+    // Es wird eine Farbe erstellt, die bei einem falschen Klick auf die Buttons angezeigt wird
     Color backgroundColor = new Color(255, 120, 120);
     private void createBottomPanel() {
         JPanel bottomPanel = new JPanel(new GridLayout(2, 2, 20, 20));
@@ -59,12 +64,13 @@ public class Clickpage extends JFrame {
             int buttonIndex = i;
             buttons[i].addActionListener(e -> {
                 if (buttonIndex == greenButtonIndex) {
-                    score += timeLeft <= 15 ? 2 : 1;
+                    score += timeLeft <= 15 ? 2 : 1; // wenn weniger als 15 Sekunden übrig sind, gibt es 2 Punkte, sonst 1
                 } else {
                     score--;
                     topPanel.setBackground(backgroundColor);
                     bottomPanel.setBackground(backgroundColor);
                     Timer timer = new Timer(180, e1 -> {
+                        // nach 180ms wird die Hintergrundfarbe wieder auf Standard gesetzt
                         topPanel.setBackground(null);
                         bottomPanel.setBackground(null);
                     });
@@ -78,6 +84,7 @@ public class Clickpage extends JFrame {
         add(bottomPanel, BorderLayout.CENTER);
     }
 
+
     private void createTimer() {
         timer = new Timer(1000, e -> {
             timeLeft--;
@@ -85,14 +92,19 @@ public class Clickpage extends JFrame {
             if (timeLeft == 0) {
                 endGame();
             }
-            if (greenButtonIndex != -1 && timeLeft % 2 == 0) {
-                changeGreenButton();
+            if (greenButtonIndex != -1) {
+                int randomTime = (int) (Math.random() * 100);
+                if (randomTime < 80) {
+                    changeGreenButton();
+                }
             }
         });
         timer.start();
         startGame();
     }
 
+
+    //startgame() setzt die Startwerte für das Spiel
     private void startGame() {
         int randomIndex = random.nextInt(4);
         buttons[randomIndex].setBackground(Color.GREEN);
@@ -105,6 +117,7 @@ public class Clickpage extends JFrame {
         }
     }
 
+    // Der Button, der grün ist, wird auf rot gesetzt und ein neuer Button wird nach Zufallsprinzip auf grün gesetzt
     private void changeGreenButton() {
         buttons[greenButtonIndex].setBackground(Color.RED);
         int randomIndex = random.nextInt(4);
@@ -115,6 +128,9 @@ public class Clickpage extends JFrame {
         greenButtonIndex = randomIndex;
     }
 
+    // Die Methode endGame() wird aufgerufen, wenn die Zeit abgelaufen ist
+    // Die Buttons werden deaktiviert und der Spieler wird zurück zum Startfenster geleitet
+    // Der Score wird in die Datei scores.txt geschrieben
     private void endGame() {
         timer.stop();
         for (JButton button : buttons) {
@@ -130,6 +146,7 @@ public class Clickpage extends JFrame {
         }
         routeBackToStart();
     }
+    // Die Methode routeBackToStart() leitet nach Ablauf der Zeit den Spieler zurück zum Startfenster
     private void routeBackToStart() {
         Start startpage = new Start(2);
         startpage.readScoresFromFile();
