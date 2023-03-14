@@ -1,4 +1,5 @@
-public class Player implements Comparable<Player> {
+
+public class Player implements Comparable<Player> { //Comparable Interface damit Collections.sort nach score funktioniert
     private int score;
     private String name;
 
