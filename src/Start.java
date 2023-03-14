@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
+// evtl muss der Path der Textdatei angepasst werden
 
 public class Start extends JFrame {
 
@@ -116,7 +117,7 @@ public class Start extends JFrame {
 
     public void readScoresFromFile() {
         try {
-            File file = new File("src/scores.txt");
+            File file = new File(Main.path);
             BufferedReader br = new BufferedReader(new FileReader(file));
             scoresTextArea.selectAll();
             scoresTextArea.replaceSelection("");

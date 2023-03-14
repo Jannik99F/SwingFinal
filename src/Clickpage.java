@@ -138,9 +138,9 @@ public class Clickpage extends JFrame {
         }
         //TODO: route back to main menu with score in scoreboard
         player.setScore(score);
-        ArrayList<Player> players = FileHandler.readFile("src/scores.txt");
+        ArrayList<Player> players = FileHandler.readFile(Main.path);
         try {
-            FileHandler.write(players, player, "src/scores.txt");
+            FileHandler.write(players, player, Main.path);
         } catch (IOException e) {
             e.printStackTrace();
         }

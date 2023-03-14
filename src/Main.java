@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+
+    //Insofern die Speicherung Probleme bereitet kann hier der Path der Textdatei angepasst werden
+    public static String path = "src/scores.txt";
     public static void main(String[] args) {
 
         //Code um Nimbus Design zu verwenden
