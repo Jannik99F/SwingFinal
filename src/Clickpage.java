@@ -19,7 +19,7 @@ public class Clickpage extends JFrame {
     public Clickpage(String name) {
 
         player.setName(name);
-        setTitle("My Swing Frame");
+        setTitle("Click-Competition");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         score = 0;
         timeLeft = 30;

@@ -15,7 +15,7 @@ public class Start extends JFrame {
     public static Clickpage clickpage;
 
     Start(int j){ //j = 1 wenn es das erste Spiel ist, wird eingesetzt um Survey erst nach einmaligem Spiel zu zeigen
-        setTitle("StartPage");
+        setTitle("Click-Competition");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 800);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
