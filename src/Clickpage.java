@@ -50,7 +50,7 @@ public class Clickpage extends JFrame {
     }
     Color backgroundColor = new Color(255, 120, 120);
     private void createBottomPanel() {
-        JPanel bottomPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        JPanel bottomPanel = new JPanel(new GridLayout(2, 2, 20, 20));
         buttons = new JButton[4];
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton();
